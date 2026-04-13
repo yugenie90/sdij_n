@@ -1,235 +1,115 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>탐구반 자동 배정</title>
-
-  <!-- ✅ 파일명이 style.css 이므로 여기를 이렇게 -->
-  <link rel="stylesheet" href="./style.css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학원 업무 관리 시스템</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
+<body class="landing-body">
 
-<body>
-  <div class="app">
-    <!-- Top Header -->
-    <header class="topbar">
-        <div class="topbar-left">
-            <div class="logo">
-                <img src="./logo.png" alt="탐구반 자동 배정 로고">
-            </div>
-      
-          <div class="title-wrap">
-            <h1 class="title">탐구반 자동 배정</h1>
-            <p class="subtitle">
-              엑셀 업로드로 탐구반 배정
-            </p>
-          </div>
+  <div class="bg-grid"></div>
+
+  <header class="main-header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-mark">A</div>
+        <div class="logo-text-wrap">
+          <span class="logo-title">학원 업무 관리</span>
+          <span class="logo-sub">Academy Management System</span>
         </div>
-      
-        <div class="topbar-right">
-          <!-- 기존 뱃지들 -->
-        </div>
-      </header>
-      
+      </div>
+      <div class="header-right">
+        <span class="header-date" id="currentDate"></span>
+      </div>
+    </div>
+  </header>
 
-    <!-- Main 2-col layout -->
-    <main class="layout">
-      <!-- Main area (75%) -->
-      <section class="main">
-        <div class="main-grid">
-          <!-- Upload & Run -->
-          <div class="card">
-            <div class="card-head">
-              <h2 class="h2">업로드 & 실행</h2>
-              <p class="muted">
-                업로드 전 <b>강의정보</b>에서 <b>본인관에서 사용하는 수업만 남겨</b>주세요.
-              </p>
-              
+  <main class="landing-main">
+    <section class="hero">
+      <p class="hero-eyebrow">업무 자동화 도구</p>
+      <h1 class="hero-title">빠르고 정확한<br>학원 업무 처리</h1>
+      <p class="hero-desc">반복적인 행정 업무를 스마트하게 처리하세요.</p>
+    </section>
+
+    <section class="features-section">
+      <h2 class="section-label">기능 목록</h2>
+      <div class="features-grid">
+
+        <!-- 퇴원생 교재 정산 -->
+        <a href="settlement.html" class="feature-card">
+          <div class="card-accent"></div>
+          <div class="card-header">
+            <div class="card-icon-wrap">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                <line x1="9" y1="9" x2="15" y2="9"/>
+                <line x1="9" y1="13" x2="13" y2="13"/>
+              </svg>
             </div>
-
-            <label class="upload">
-              <input id="file" type="file" accept=".xlsx" />
-              <div class="upload-inner">
-                <div class="upload-icon">⬆️</div>
-                <div class="upload-text">
-                  <div class="upload-title">엑셀 파일 업로드</div>
-                  <div class="upload-sub">클릭해서 선택하거나 드래그&드롭</div>
-                </div>
-                <div class="upload-ext">.xlsx</div>
-              </div>
-            </label>
-
-            <div class="btn-row">
-              <button id="run" class="btn btn-primary" disabled>배정 실행</button>
-              <button id="download" class="btn btn-secondary" disabled>결과 다운로드</button>
-            </div>
-
-            <div class="notice">
-              <div class="notice-title">⚠️ 안내드림다!</div>
-              <div class="notice-body">
-                - 사람이 하기엔 너무 복잡해서 기계를 갈궜습니다.<br>
-                <span class="block">- 한 번에 안 되면 두 번 하면 됩니다. 급할수록 커피부터</span><br>
-                <span class="block">- 문제가 있다면 말해주세요. 대부분 고칠 수 있지만, 지금 시간이 있을까요?</span><br>
-                <span class="block">- 예외는 항상 존재합니다. 그건 시스템의 문제가 아니라...아닙니다...</span><br>
-                <span class="block">- 결과 파일에서 <b>미배정사유</b> / <b>불가능탐구목록</b>을 확인이 가능합니다.</span><br><br>
-                <span class="block"> <b>"여튼간에 이건 처음 감 잡을때만 쓰기로 해요... 쌤덜 개강 화이팅!!"</b></span>
-            
-                
-              </div>
-            </div>
+            <span class="card-status active">사용 가능</span>
           </div>
-
-          <!-- Logs -->
-          <div class="card">
-            <div class="card-head">
-              <h2 class="h2">실행 로그</h2>
-              <p class="muted">오류가 나면 로그를 복사해서 공유하면 빠르게 해결돼요.</p>
-            </div>
-
-            <pre id="log" class="log" aria-live="polite"></pre>
-
-            <div class="legend">
-              <span class="dot dot-ok"></span>성공
-              <span class="dot dot-warn"></span>경고
-              <span class="dot dot-err"></span>오류
-            </div>
+          <div class="card-body">
+            <h3 class="card-title">퇴원생 교재 정산</h3>
+            <p class="card-desc">퇴원 학생의 교재 배부 내역을 조회하고<br>환불 금액을 자동으로 계산합니다.</p>
           </div>
-        </div>
-      </section>
+          <div class="card-footer">
+            <span class="card-link">시작하기 <span class="arrow">→</span></span>
+          </div>
+        </a>
 
-      <!-- Right guide (25%) -->
-      <aside class="side">
-        <div class="side-head">
-          <h2 class="h2">사용 설명서</h2>
-          <p class="muted">업로드 전/후에 꼭 확인하세요. (yugenie@hiconsy.com)</p>
-          <div class="banner">
-            <b>양식 받아가세요!</b>
-            <a href="./sample.xlsx" download>샘플 엑셀 받기</a>
+        <!-- Coming Soon 1 -->
+        <div class="feature-card disabled">
+          <div class="card-header">
+            <div class="card-icon-wrap muted">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+                <line x1="3" y1="15" x2="21" y2="15"/>
+                <line x1="9" y1="3" x2="9" y2="21"/>
+              </svg>
+            </div>
+            <span class="card-status coming">준비중</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title muted">기능 추가 예정</h3>
+            <p class="card-desc muted">새로운 업무 기능이 추가될 예정입니다.</p>
           </div>
         </div>
 
-        <div class="side-body">
-          <div class="section">
-            <div class="section-title">1) 시트 이름</div>
-            <div class="chips">
-              <span class="chip">강의정보</span>
-              <span class="chip">학생정보</span>
+        <!-- Coming Soon 2 -->
+        <div class="feature-card disabled">
+          <div class="card-header">
+            <div class="card-icon-wrap muted">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
             </div>
-            <p class="muted small">띄어쓰기/철자 다르면 실패합니다.</p>
+            <span class="card-status coming">준비중</span>
           </div>
-
-          <div class="section">
-            <div class="section-title">2) 강의정보 필수 컬럼</div>
-            <div class="chips">
-              <span class="chip">과목</span><span class="chip">유형</span><span class="chip">반</span>
-              <span class="chip">강의실</span><span class="chip">요일</span><span class="chip">교시</span><span class="chip">최대인원</span>
-            </div>
-            
-            <p class="muted small">※ 강의정보 받아서 인원은 직접 입력</p>
+          <div class="card-body">
+            <h3 class="card-title muted">기능 추가 예정</h3>
+            <p class="card-desc muted">새로운 업무 기능이 추가될 예정입니다.</p>
           </div>
-
-          <div class="section">
-            <div class="section-title">3) 학생정보 필수 컬럼</div>
-            <div class="chips">
-              <span class="chip">일련번호</span><span class="chip">반</span><span class="chip">탐구1</span><span class="chip">탐구2</span>
-            </div>
-          </div>
-
-          <div class="section">
-            <div class="section-title">4) 배정 규칙 요약</div>
-            <ul class="list">
-              <li>필수수업과 <b>요일+교시가 겹치면</b> 해당 탐구는 불가능</li>
-              <li><b>정원 90%</b>가 차면 → <b>다른반에 분산</b> → 그래도 안되면 마지막에 <b>100%</b> 허용</li>
-              <li>같은 반은 가능하면 같은 탐구(절대값 아님)</li>
-              <li>결과에서 <b>미배정사유</b> / <b>불가능탐구목록</b> 확인</li>
-            </ul>
-          </div>
-
-          <div class="section">
-            <div class="section-title">5) 결과 파일 시트</div>
-            <ul class="list">
-              <li><b>학생별배정</b>: 학생 기준 결과(사유 포함)</li>
-              <li><b>불가능탐구_요약</b>: 반 기준 불가능 탐구 목록</li>
-            </ul>
-          
-        
-          </div>
-
-          <div class="section logic-accordion">
-            <button class="logic-toggle" type="button">
-              <span>📊 배정 로직 설명</span>
-              <i class="arrow">▾</i>
-            </button>
-          
-            <div class="logic-panel">
-              <p class="muted small">
-                이 도구는 아래 순서와 규칙에 따라 탐구반을 자동 배정합니다.
-              </p>
-          
-              <div class="logic-step">
-                <span class="logic-num">1</span>
-                <div>
-                  <b>엑셀 업로드 & 검증</b>
-                  <p class="small muted">강의정보 / 학생정보 시트 및 필수 컬럼 확인</p>
-                </div>
-              </div>
-          
-              <div class="logic-step highlight">
-                <span class="logic-num">2</span>
-                <div>
-                  <b>반별 필수수업 고정</b>
-                  <p class="small muted">
-                    국어·수학·영어·수리논술은 <b>자기 반 수업만</b> 고정됩니다.
-                  </p>
-                </div>
-              </div>
-          
-              <div class="logic-step">
-                <span class="logic-num">3</span>
-                <div>
-                  <b>불가능 탐구 계산</b>
-                  <p class="small muted">필수수업과 시간 충돌 시 자동 제외</p>
-                </div>
-              </div>
-          
-              <div class="logic-step">
-                <span class="logic-num">4</span>
-                <div>
-                  <b>같은 반 · 같은 탐구 조합 우선</b>
-                  <p class="small muted">가능하면 동일 조합으로 배정</p>
-                </div>
-              </div>
-          
-              <div class="logic-step">
-                <span class="logic-num">5</span>
-                <div>
-                  <b>정원 기준 배정</b>
-                  <p class="small muted">정원 90% 우선 → 분산 → 100% 허용</p>
-                </div>
-              </div>
-          
-              <div class="logic-step error">
-                <span class="logic-num">6</span>
-                <div>
-                  <b>미배정 처리</b>
-                  <p class="small muted">
-                    정원 초과 / 필수 충돌 / 수업 미개설 시 사유 기록
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-
-
-
         </div>
-      </aside>
-    </main>
-  </div>
 
-  <script src="./app.js"></script>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <p>내부 업무용 시스템 · 무단 배포 금지</p>
+  </footer>
+
+  <script>
+    const now = new Date();
+    document.getElementById('currentDate').textContent =
+      now.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+  </script>
 </body>
 </html>
